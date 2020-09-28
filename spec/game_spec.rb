@@ -1,13 +1,29 @@
 require 'game'
 
 describe Game do
-  let(:game) {described_class.new(player1, player2)}
+  let(:player_class) {double("player class")}
   let(:player1) {double}
   let(:player2) {double}
-  it 'Manages attacks  ' do
+  let(:game) {described_class.new("string", "string", player_class: player_class)}
+
+  before do
+    allow(player_class).to receive(:new).and_return(player1, player2)
+  end
+
+  it 'Manages attacks' do
     expect(player2).to receive(:receive_damage)
     game.attack
   end
 
+  it 'creates player one' do
+    expect(game.player_one).to eq player1
+  end
+
+  it 'returns player two' do
+    expect(game.player_two).to eq player2
+  end
 
 end
+
+
+# provide access to the details of the players
