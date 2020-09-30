@@ -1,5 +1,5 @@
 require 'sinatra/base'
-require 'game'
+require './lib/game.rb'
 
 class Battle < Sinatra::Base
 enable:sessions
@@ -19,12 +19,14 @@ enable:sessions
     # $player_1 = Player.new(params[:player_1_name])
     # $player_2 = Player.new(params[:player_2_name])
     $game = Game.new(params[:player_1_name],params[:player_2_name])
-    redirect '/slow'
+    $game.switch_turn
+    redirect '/play'
   end
 
 
-get '/slow'do
+get '/play'do
   @game = $game
+  $game.switch_turn
   erb:play
 end
 
@@ -32,8 +34,21 @@ end
 get '/attack' do
   $game.attack
   @game = $game
-  erb :attack
+  if @game.player1.hit_points == 0 || @game.player2.hit_points == 0
+    redirect '/gameover'
+
+  else
+
+    erb :attack
+  end
+
 end
+
+  get '/gameover' do
+    @dead_player = $game.players.detect { |player| player.hit_points == 0 }
+  erb :gameover
+  end
+
 
 
 

@@ -16,11 +16,11 @@ describe Game do
   end
 
   it 'creates player one' do
-    expect(game.player_one).to eq player1
+    expect(game.player1).to eq player1
   end
 
   it 'returns player two' do
-    expect(game.player_two).to eq player2
+    expect(game.player2).to eq player2
   end
 
 end

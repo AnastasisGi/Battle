@@ -13,4 +13,6 @@ def receive_damage
   @hit_points -= 10
 end
 
+
+
 end
